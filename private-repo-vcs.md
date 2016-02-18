@@ -1,10 +1,11 @@
 Want to change something in a composer package?
 
-Assuming that:
+**Assuming that:**
 - Your Github username is `zOxta` 
 - The original package is `"mcstutterfish/cloudflare": "dev-master"`
-- The pakcage name is `cloudflare`.
+- The pakcage name is `cloudflare`
 
+**Steps:**
 1. Fork the Github repository of the original packages
 2. Create a new branch `feature`
 3. Make the changes you want then commit and push to your `feature` branch
