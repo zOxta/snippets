@@ -7,7 +7,7 @@ max_binlog_size = 100M
 binlog_format = STATEMENT
 
 
-$ mysqlbinlog /var/log/mysql/mysql-bin.00001 | \
+$ mysqlbinlog /var/log/mysql/mysql-bin.000001 | \
 grep -i -e "^update" -e "^insert" -e "^delete" -e "^replace" -e "^alter" | \
 cut -c1-100 | tr '[A-Z]' '[a-z]' | \
 sed -e "s/\t/ /g;s/\`//g;s/(.*$//;s/ set .*$//;s/ as .*$//" | sed -e "s/ where .*$//" | \
