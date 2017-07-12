@@ -1,7 +1,8 @@
-## THESE SETTINGS CHANGE OVER TIME AND APPLY AS OF JULY 2017 - use at your own risk
+THESE SETTINGS CHANGE OVER TIME AND APPLY AS OF JULY 2017 - use at your own risk
 
-# ============ NGINX
+## NGINX Config
 
+```
 server {
   .
   ..
@@ -31,44 +32,38 @@ server {
   ..
   .
 }
+```
     
-# ============ END NGINX CONFIG
     
-    
-# ============ SSH/SSHD
+## SSH/SSHD Config
 
-$ vi /etc/ssh/ssh_config
-The add the following Ciphers:
+1. Edit ssh_config `vi /etc/ssh/ssh_config` then add/edit the following line: 
+**Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc** (the end result is having these ciphers only)
 
-Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc
+2. Edit sshd_config `vi /etc/ssh/sshd_config` then add/edit the following line: 
+**Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc** (the end result is having these ciphers only)
 
+3. To check ciphers: `sudo sshd -T |grep ciphers`
 
-$ vi /etc/ssh/sshd_config
-The add the following Ciphers:
+4. Restart SSH: `service ssh restart`
 
-Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc
-
-To check ciphers:
-$ sudo sshd -T |grep ciphers
-
-Then restart SSH
-
-# ============ SSH/SSHD CONFIG
-
-# hints:
+## Hints
 - make sure you have a default_server listed in your NGINX config and for that server enfore the same SSL config above, example:
+
+```
   server { 
     listen 443 ssl default_server; 
     #ssl config .... 
   }
+```
 
 - if you are behind CloudFlare put in mind that their SSL config overrides yours (you may need to disable it for your domain because to pass PCI compliance if you are on the free plan)
 
-# To test connection over SSH using a particular cipher
-➜  ~ ssh user@hostname -c arcfour
+### To test connection over SSH using a particular cipher
+`ssh user@hostname -c arcfour`
 
-# Sample rejection response
+### Sample rejection response
 Unable to negotiate with hostname port 22: no matching cipher found. Their offer: aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc
 
-# To check algorithms/ciphers supported by a host
-➜  ~ nmap -Pn -sV --script ssh2-enum-algos hostname -p22
+### To check algorithms/ciphers supported by a host
+`nmap -Pn -sV --script ssh2-enum-algos hostname -p22`
